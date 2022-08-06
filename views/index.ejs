@@ -4,11 +4,11 @@
     <title>Shoham.net</title>
 </head>
 <body>
-<div id="input">
-    <input class="name" type="text">
-    <input class="pass" type="password">
-</div>
-<button id="submit" onclick="pressed()">Submit</button>
+<form action="/login" method = "post">
+    <input class="name" type="text" name="name">
+    <input class="pass" type="password" name="password">
+    <input type = "submit">
+</form>
 <div class="text">
     <h1 id="debug-output"></h1>
 </div>

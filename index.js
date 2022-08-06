@@ -1,16 +1,16 @@
 const express = require('express');
 const mysql = require('mysql');
+const bodyParser = require("body-parser");
 const app = express();
 app.use(express.static(`${__dirname}/static`));
+app.set('views', __dirname + '/views');
+app.set('view engine', 'ejs');
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-// send index.html
+// send index.ejs
 app.get("/", (req, res) => {
-    res.sendFile(`${__dirname}/views/index.html`, (err) => {
-        if (err) {
-            console.log(err);
-            res.end(err.message);
-        }
-    });
+    res.render('index');
 });
 
 // Send script
@@ -34,7 +34,19 @@ con.connect(function(err) {
     console.log("Connected!");
 });
 // check stuff in db
-export function check_exist(username){
+function check_exist(username){
     console.log(username);
 }
 
+app.post('/login', (req, res) => {
+    let username = req.body.name;
+    let password = req.body.password;
+    res.send(username + "  " + password);
+})
+
+function pressed() {
+    let name = document.getElementById('input').getElementsByClassName("name").item(0).value;
+    let password = document.getElementById('input').getElementsByClassName("pass").item(0).value;
+    check_exist(name);
+    document.getElementById('debug-output').innerHTML = name + " haha      " + password;
+}
