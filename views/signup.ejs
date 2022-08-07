@@ -2,17 +2,50 @@
 <html lang="en">
 <head>
     <title>Sign Up</title>
+    <style>
+        #name{
+            horiz-align: left;
+        }
+        #pass{
+            horiz-align: left;
+        }
+        #content {
+            horiz-align: center;
+            vertical-align: center;
+            alignment: center;
+            margin: auto;
+            width: fit-content;
+            padding: 10px;
+        }
+
+        input[type=submit] {
+            alignment: center;
+            align-content: center;
+            width: 20em;
+            height: 2em;
+        }
+    </style>
 </head>
 <body>
+<div id="content">
 <form action="/signup/submit" method = "post">
-    <label>
-        <input class="name" type="text" name="name">
-    </label>
-    <label>
-        <input class="pass" type="password" name="password">
-    </label>
-    <input type = "submit" value="Sign Up">
+    <div id="name">
+        Username:
+        <label>
+            <input class="name" type="text" name="name">
+        </label>
+    </div>
+    <div id="pass">
+        Password:
+        <label>
+            <input class="pass" type="password" name="password">
+        </label>
+    </div>
+    <div id="press">
+        <input type="submit" value="Sign Up">
+    </div>
 </form>
+</div>
 <div class="text">
     <h1 id="debug-output"></h1>
 </div>

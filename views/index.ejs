@@ -2,14 +2,33 @@
 <html lang="en">
 <head>
     <title>Shoham.net</title>
+    <style>
+        #buttons{
+            horiz-align: center;
+            vertical-align: center;
+            alignment: center;
+            margin: auto;
+            width: fit-content;
+            padding: 10px;
+        }
+        input[type=submit] {
+            alignment: center;
+            align-content: center;
+            width: 20em;
+            height: 2em;
+        }
+    </style>
 </head>
 <body>
-<form action="/login" method = "post">
-    <input type = "submit" value="Login">
-</form>
-<form action="/signup" method = "post">
-    <input type = "submit" value="Sign Up">
-</form>
+<div id="buttons">
+    <form action="/login" method = "post">
+        <input class="button" type = "submit" value="Login">
+    </form>
+    <form action="/signup" method = "post">
+        <input class="button" type = "submit" value="Sign Up">
+    </form>
+
+</div>
 <div class="text">
     <h1 id="debug-output"></h1>
 </div>

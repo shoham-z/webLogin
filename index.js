@@ -1,10 +1,12 @@
 const express = require('express');
 const mysql = require('mysql');
 const bodyParser = require("body-parser");
+
 const app = express();
-app.use(express.static(`${__dirname}/static`));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
+
+app.use(express.static(`${__dirname}/static`));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
@@ -28,7 +30,7 @@ app.listen(8000, "localhost", () => {
 });
 
 
-//***** database stuff
+//***** connect to database
 const con = mysql.createConnection({
     host: "localhost",
     user: "root",
