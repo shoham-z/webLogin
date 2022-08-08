@@ -1,6 +1,7 @@
 const express = require('express');
 const mysql = require('mysql');
 const bodyParser = require("body-parser");
+const fs = require("fs");
 
 const app = express();
 app.set('views', __dirname + '/views');
@@ -73,6 +74,8 @@ app.post('/login/submit', (req, res) => {
 app.post('/signup/submit', (req, res) => {
     let username = req.body.name;
     let password = req.body.password;
+    let email = req.body.email;
+    let phone = req.body.phone;
     let user_exists = false;
     let query = "SELECT username FROM users";
     con.query(query, function (err, result) {
@@ -83,14 +86,20 @@ app.post('/signup/submit', (req, res) => {
         if (user_exists) {
             res.send("Username Already Exists!");
         } else {
-            let query = "insert into users(username, password) values ('" + username + "', '" + password + "');"
-            console.log(query);
-            let response;
-            con.query(query, function (err, result) {
-                if (err) response = "Error Occurred When Signing Up!";
-                if (result.affectedRows===1) response = "Signed Up Successfully!";
-                res.send(response + '<form action="/login" method = "post"> <input type = "submit" value="Login">                </form>');
-            });
+            let validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+            if (email.match(validRegex)) {
+                console.log("good!");
+                let query = "insert into users(username, password, email, phone) values ('" + username + "', '" + password + "', '" + email + "', '" + phone + "');"
+                let response;
+                con.query(query, function (err, result) {
+                    if (err) response = "Error Occurred When Signing Up!";
+                    if (result.affectedRows === 1) response = "Signed Up Successfully!";
+                    res.send(response + '<form action="/login" method = "post"><input type="submit" value="Login"></form>');
+                });
+            } else {
+                let signup_page = fs.readFileSync("views/signup.ejs");
+                res.send("Invalid Mail Address!\n" + signup_page.toString());
+            }
         }
     });
 

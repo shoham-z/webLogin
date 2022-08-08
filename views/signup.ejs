@@ -9,6 +9,12 @@
         #pass{
             horiz-align: left;
         }
+        #email{
+            horiz-align: left;
+        }
+        #phone{
+            horiz-align: left;
+        }
         #content {
             horiz-align: center;
             vertical-align: center;
@@ -29,6 +35,18 @@
 <body>
 <div id="content">
 <form action="/signup/submit" method = "post">
+    <div id="email">
+        Email:
+        <label>
+            <input class="email" type="text" name="email">
+        </label>
+    </div>
+    <div id="phone">
+        Phone Number:
+        <label>
+            <input class="phone" type="text" name="phone">
+        </label>
+    </div>
     <div id="name">
         Username:
         <label>
