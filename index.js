@@ -2,6 +2,7 @@ const express = require('express');
 const mysql = require('mysql');
 const bodyParser = require("body-parser");
 const fs = require("fs");
+const CryptoJS = require('crypto-js');
 
 const app = express();
 app.set('views', __dirname + '/views');
@@ -47,6 +48,7 @@ con.connect(function (err) {
 app.post('/login/submit', (req, res) => {
     let username = req.body.name;
     let password = req.body.password;
+    console.log()
     let user_exists = false;
     let query = "SELECT username FROM users";
     con.query(query, function (err, result) {
@@ -60,7 +62,8 @@ app.post('/login/submit', (req, res) => {
             con.query(query, function (err, result) {
                 if (err) throw err;
                 for (let i = 0; i < result.length; i++) {
-                    if (password === result[i].password) response = "Logged In Successfully!";
+                    if (encrypt(password) === result[i].password) response = "Logged In Successfully!";
+
                 }
                 res.send(response);
             });
@@ -70,6 +73,11 @@ app.post('/login/submit', (req, res) => {
     });
 
 })
+
+
+const encrypt = (text) => {
+    return CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(text));
+};
 
 app.post('/signup/submit', (req, res) => {
     let username = req.body.name;
@@ -88,8 +96,7 @@ app.post('/signup/submit', (req, res) => {
         } else {
             let validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
             if (email.match(validRegex)) {
-                console.log("good!");
-                let query = "insert into users(username, password, email, phone) values ('" + username + "', '" + password + "', '" + email + "', '" + phone + "');"
+                let query = "insert into users(username, password, email, phone) values ('" + username + "', '" + encrypt(password) + "', '" + email + "', '" + phone + "');"
                 let response;
                 con.query(query, function (err, result) {
                     if (err) response = "Error Occurred When Signing Up!";
